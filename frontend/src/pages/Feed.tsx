@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useFeed } from '../hooks/useFeed';
 import { Search, Download, CheckCircle2 } from 'lucide-react';
-
-const BACKEND_URL = import.meta.env.VITE_API_URL.replace('/api', '');
+import { getImageUrl } from '../utils/image';
 
 export const Feed = () => {
   const { feedCards, loading, importedIds, handleImport } = useFeed();
@@ -70,7 +69,7 @@ export const Feed = () => {
                 <div className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
                   {card.user?.avatarUrl ? (
                     <img 
-                      src={`${BACKEND_URL}${card.user.avatarUrl}`}
+                      src={getImageUrl(card.user.avatarUrl)}
                       alt="avatar" 
                       className="w-5 h-5 rounded-full object-cover"
                     />
@@ -100,7 +99,7 @@ export const Feed = () => {
                 <div className="w-full h-48 bg-white/5 relative">
                   {card.baseCard?.imageUrl ? (
                     <img 
-                      src={`${BACKEND_URL}${card.baseCard.imageUrl}`} 
+                      src={getImageUrl(card.baseCard.imageUrl)}
                       alt={card.customWord} 
                       className="w-full h-full object-cover opacity-80" 
                     />

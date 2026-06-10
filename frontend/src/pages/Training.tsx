@@ -4,19 +4,7 @@ import { motion, AnimatePresence, useAnimation, type PanInfo } from 'framer-moti
 import { Check, X, ChevronUp, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useTraining } from '../hooks/useTraining';
-
-const getImageUrl = (url?: string) => {
-  console.log("DEBUG: Входной URL в getImageUrl:", url);
-  if (!url) return '';
-  if (url.startsWith('http')) return url;
-
-  const base = "https://api.erronmeeshproject.nomorepartiessite.ru";
-  const cleanUrl = url.startsWith('/') ? url : `/${url}`;
-  const finalUrl = `${base}${cleanUrl}`;
-  
-  console.log("DEBUG: Итоговый URL:", finalUrl);
-  return finalUrl;
-};
+import { getImageUrl } from '../utils/image';
 
 export const Training = () => {
   const {
@@ -173,9 +161,6 @@ export const Training = () => {
   const upcomingCards = cards.slice(currentIndex, currentIndex + 3); 
   const leftStack = history.filter(c => c.direction === 'left').slice(-2); 
   const rightStack = history.filter(c => c.direction === 'right').slice(-2); 
-
-  console.log("DEBUG: quizData imageUrl =", quizData?.imageUrl);
-  console.log("DEBUG: Full URL для картинки =", quizData?.imageUrl ? getImageUrl(quizData.imageUrl) : "Пусто");
 
   return (
     <div className="p-5 flex flex-col relative overflow-hidden min-h-[85vh] max-w-7xl mx-auto w-full justify-center">

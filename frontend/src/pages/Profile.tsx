@@ -1,7 +1,6 @@
 import { Eye, EyeOff, Camera, User } from 'lucide-react';
 import { useProfile } from '../hooks/useProfile';
-
-const BACKEND_URL = import.meta.env.VITE_API_URL.replace('/api', '');
+import { getImageUrl } from '../utils/image';
 
 export const Profile = () => {
   const {
@@ -20,7 +19,7 @@ export const Profile = () => {
     );
   }
 
-  const displayAvatar = previewUrl || (user?.avatarUrl ? `${BACKEND_URL}${user.avatarUrl}` : null);
+  const displayAvatar = previewUrl || (user?.avatarUrl ? getImageUrl(user.avatarUrl) : null);
 
   return (
     <div className="p-8 max-w-md mx-auto mt-12 dark-matte-glass rounded-[40px] shadow-2xl border border-white/10 relative z-10">

@@ -3,8 +3,7 @@ import { useDictionary } from '../hooks/useDictionary';
 import { StarRating } from '../components/StarRating';
 import { Search, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
-
-const BACKEND_URL = import.meta.env.VITE_API_URL.replace('/api', '');
+import { getImageUrl } from '../utils/image';
 
 export const Dictionary = () => {
   const { cards, loading, removeCard } = useDictionary();
@@ -116,7 +115,7 @@ export const Dictionary = () => {
               <div className="w-full h-48 bg-white/5 relative">
                 {card.baseCard?.imageUrl ? (
                   <img 
-                    src={`${BACKEND_URL}${card.baseCard.imageUrl}`} 
+                    src={getImageUrl(card.baseCard.imageUrl)}
                     alt={card.customWord} 
                     className="w-full h-full object-cover opacity-80" 
                   />
