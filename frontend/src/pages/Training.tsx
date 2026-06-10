@@ -6,12 +6,16 @@ import toast from 'react-hot-toast';
 import { useTraining } from '../hooks/useTraining';
 
 const getImageUrl = (url?: string) => {
+  console.log("DEBUG: Входной URL в getImageUrl:", url);
   if (!url) return '';
   if (url.startsWith('http')) return url;
 
   const base = "https://api.erronmeeshproject.nomorepartiessite.ru";
   const cleanUrl = url.startsWith('/') ? url : `/${url}`;
-  return `${base}${cleanUrl}`;
+  const finalUrl = `${base}${cleanUrl}`;
+  
+  console.log("DEBUG: Итоговый URL:", finalUrl);
+  return finalUrl;
 };
 
 export const Training = () => {
