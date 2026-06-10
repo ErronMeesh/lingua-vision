@@ -24,7 +24,15 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
 
-  app.enableCors();
+  app.enableCors({
+    origin: [
+      'https://erronmeeshproject.nomorepartiessite.ru',
+      'http://localhost:5173',
+      'http://localhost:8081',
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
 
   const port = process.env.PORT || 3000;
   await app.listen(port);
