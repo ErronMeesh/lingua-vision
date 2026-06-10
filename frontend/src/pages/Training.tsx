@@ -170,6 +170,9 @@ export const Training = () => {
   const leftStack = history.filter(c => c.direction === 'left').slice(-2); 
   const rightStack = history.filter(c => c.direction === 'right').slice(-2); 
 
+  console.log("DEBUG: quizData imageUrl =", quizData?.imageUrl);
+  console.log("DEBUG: Full URL для картинки =", quizData?.imageUrl ? getImageUrl(quizData.imageUrl) : "Пусто");
+
   return (
     <div className="p-5 flex flex-col relative overflow-hidden min-h-[85vh] max-w-7xl mx-auto w-full justify-center">
       
