@@ -5,11 +5,13 @@ import { Check, X, ChevronUp, ChevronDown, ChevronLeft, ChevronRight } from 'luc
 import toast from 'react-hot-toast';
 import { useTraining } from '../hooks/useTraining';
 
-const BACKEND_URL = import.meta.env.VITE_API_URL.replace('/api', '');
-
 const getImageUrl = (url?: string) => {
   if (!url) return '';
-  return url.startsWith('http') ? url : `${BACKEND_URL}${url}`;
+  if (url.startsWith('http')) return url;
+
+  const base = "https://api.erronmeeshproject.nomorepartiessite.ru";
+  const cleanUrl = url.startsWith('/') ? url : `/${url}`;
+  return `${base}${cleanUrl}`;
 };
 
 export const Training = () => {
