@@ -64,11 +64,16 @@ export const useQuizLogic = (cards: UserCard[], mode: QuizMode) => {
     const target = quizData.word.toLowerCase().trim();
     const typed = input.toLowerCase().trim();
     const dist = getEditDistance(target, typed);
+    const targetLen = target.length;
 
     let q = 0;
-    if (dist === 0) q = 5; 
-    else if (dist === 1) q = 3; 
-
+    if (dist === 0) {
+      q = 5; 
+    } else if (dist === 1 && targetLen >= 5) {
+      q = 3; 
+    } else {
+      q = 0; 
+    }
 
     return { isCorrect: q > 0, quality: q, distance: dist, targetWord: quizData.word };
   }, [quizData]);

@@ -20,7 +20,7 @@ export const Auth = ({ onLogin }: AuthProps) => {
  
       <div className="mb-10 text-center">
         <h1 className="text-4xl md:text-5xl font-serif tracking-[0.3em] text-white drop-shadow-lg">
-          LINGUA <span className="opacity-40">VISTA</span>
+          LINGUA <span className="opacity-40">VISION</span>
         </h1>
         <p className="text-white/40 tracking-widest uppercase text-xs mt-3">
           {t('auth.subtitle')}
