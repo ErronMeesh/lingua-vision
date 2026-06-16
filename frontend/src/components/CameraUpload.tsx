@@ -1,5 +1,6 @@
 import { useCamera } from '../hooks/useCamera';
 import { Camera, RefreshCw, Eye, Globe, Check, X, Plus } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface DetectedObject {
   label_en: string;
@@ -8,6 +9,7 @@ interface DetectedObject {
 }
 
 export const CameraUpload = () => {
+  const { t } = useTranslation();
   const {
     loading, result, preview, isPublic, imgDimensions, savedWords,
     setIsPublic, handleFileChange, handleImageLoad, handleSaveCard, handleReset
@@ -18,10 +20,10 @@ export const CameraUpload = () => {
       
       <div className="text-center w-full mt-4">
         <h1 className="text-3xl md:text-4xl font-serif text-white tracking-widest uppercase mb-2">
-          ADD NEW WORDS MODULE
+          {t('camera.title')}
         </h1>
         <p className="text-gray-400 text-sm tracking-wide">
-          Upload an image to identify objects for your library.
+          {t('camera.subtitle')}
         </p>
       </div>
 
@@ -41,15 +43,15 @@ export const CameraUpload = () => {
                 <Camera size={64} strokeWidth={1.5} />
               </div>
               <h2 className="text-2xl font-serif text-white mb-2 tracking-widest uppercase">
-                UPLOAD IMAGE
+                {t('camera.uploadTitle')}
               </h2>
-              <p className="text-gray-400 text-sm">Drop or click to select a photo.</p>
+              <p className="text-gray-400 text-sm">{t('camera.uploadDesc')}</p>
               
               {loading && (
                 <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-20 rounded-3xl">
                   <div className="flex flex-col items-center gap-3">
                     <RefreshCw className="animate-spin text-white" size={32} />
-                    <span className="text-white font-serif tracking-widest uppercase text-sm">Processing...</span>
+                    <span className="text-white font-serif tracking-widest uppercase text-sm">{t('camera.processing')}</span>
                   </div>
                 </div>
               )}
@@ -91,7 +93,7 @@ export const CameraUpload = () => {
                 onClick={handleReset}
                 className="mt-5 w-full py-3 flex items-center justify-center gap-2 text-red-400 font-bold uppercase tracking-widest text-sm bg-red-500/10 hover:bg-red-500/20 rounded-xl transition-colors border border-red-500/20"
               >
-                <X size={16} /> Закрыть фото
+                <X size={16} /> {t('camera.closePhoto')}
               </button>
             </div>
           )}
@@ -102,7 +104,7 @@ export const CameraUpload = () => {
             
             <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4 shrink-0">
               <h2 className="text-2xl font-serif text-white tracking-widest uppercase">
-                IDENTIFIED WORDS
+                {t('camera.identifiedWords')}
               </h2>
               <div className="text-purple-400 drop-shadow-[0_0_10px_rgba(168,85,247,0.4)]">
                 <Eye size={28} />
@@ -111,12 +113,12 @@ export const CameraUpload = () => {
 
             {!result ? (
               <div className="flex-1 flex items-center justify-center text-white/20 font-serif tracking-widest uppercase text-sm">
-                Waiting for image...
+                {t('camera.waiting')}
               </div>
             ) : (
               <div className="flex flex-col gap-3 flex-1 overflow-y-auto pr-2 custom-scrollbar">
                 {result.objects?.length === 0 && (
-                  <p className="text-center text-white/40 mt-10">Объекты не найдены.</p>
+                  <p className="text-center text-white/40 mt-10">{t('camera.noObjects')}</p>
                 )}
 
                 {result.objects?.map((obj: DetectedObject, index: number) => {
@@ -141,7 +143,7 @@ export const CameraUpload = () => {
                             ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30 cursor-default' 
                             : 'bg-white/5 text-white/50 border-white/10 hover:bg-white/10 hover:text-white hover:border-white/30'
                         }`}
-                        title={isSaved ? "Уже в словаре" : "Добавить в словарь"}
+                        title={isSaved ? t('camera.alreadySaved') : t('camera.addToDict')}
                       >
                         {isSaved ? <Check size={18} strokeWidth={2.5} /> : <Plus size={20} strokeWidth={2} />}
                       </button>
@@ -159,7 +161,7 @@ export const CameraUpload = () => {
           <label className="flex items-center gap-6 px-8 py-4 rounded-full dark-matte-glass border border-white/10 cursor-pointer hover:bg-white/5 transition-colors shadow-lg">
             <div className="flex items-center gap-3">
               <Globe size={20} className="text-blue-400 drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]" />
-              <span className="text-white/90 text-sm font-bold tracking-widest uppercase">Publish to Global Feed</span>
+              <span className="text-white/90 text-sm font-bold tracking-widest uppercase">{t('camera.publishToFeed')}</span>
             </div>
             
             <div className="relative flex items-center">

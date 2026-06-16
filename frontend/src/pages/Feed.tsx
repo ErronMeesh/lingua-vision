@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { useFeed } from '../hooks/useFeed';
 import { Search, Download, CheckCircle2 } from 'lucide-react';
 import { getImageUrl } from '../utils/image';
+import { useTranslation } from 'react-i18next';
 
 export const Feed = () => {
+  const { t } = useTranslation();
   const { feedCards, loading, importedIds, handleImport } = useFeed();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -17,7 +19,7 @@ export const Feed = () => {
     return (
       <div className="p-5 flex justify-center items-center h-[50vh]">
         <p className="animate-pulse text-xl font-medium text-white/50 tracking-widest uppercase">
-          ⏳ Загрузка ленты...
+          {t('feed.loading')}
         </p>
       </div>
     );
@@ -29,15 +31,17 @@ export const Feed = () => {
       <div className="flex flex-col md:flex-row justify-between items-center gap-6">
         <div>
           <h2 className="text-3xl md:text-4xl font-serif text-white tracking-widest uppercase m-0">
-            GLOBAL FEED
+            {t('feed.title')}
           </h2>
-          <p className="text-white/40 text-sm tracking-wide mt-1">Слова, которыми поделились другие пользователи.</p>
+          <p className="text-white/40 text-sm tracking-wide mt-1">
+            {t('feed.subtitle')}
+          </p>
         </div>
         
         <div className="relative w-full md:w-80">
           <input 
             type="text" 
-            placeholder="Search feed..." 
+            placeholder={t('feed.searchPlaceholder')} 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-12 pr-4 py-3 rounded-full dark-matte-glass border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-white/30 transition-colors"
@@ -49,12 +53,14 @@ export const Feed = () => {
       {feedCards.length === 0 ? (
         <div className="dark-matte-glass border border-dashed border-white/20 rounded-[32px] p-12 text-center mt-10">
           <p className="text-white/50 text-lg font-serif tracking-widest uppercase">
-            В ленте пока пусто. Стань первым, кто опубликует слово в Камере!
+            {t('feed.emptyState')}
           </p>
         </div>
       ) : filteredCards.length === 0 ? (
         <div className="text-center p-10">
-          <p className="text-white/40 text-lg tracking-wide">По запросу «{searchQuery}» ничего не найдено.</p>
+          <p className="text-white/40 text-lg tracking-wide">
+            {t('feed.notFound', { query: searchQuery })}
+          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -91,7 +97,7 @@ export const Feed = () => {
                       ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30 cursor-default' 
                       : 'bg-black/40 text-white/70 border-white/10 hover:bg-white/20 hover:text-white hover:border-white/40'
                   }`}
-                  title={isImported ? "Уже в словаре" : "Забрать в свой словарь"}
+                  title={isImported ? t('feed.alreadySaved') : t('feed.importCard')}
                 >
                   {isImported ? <CheckCircle2 size={20} /> : <Download size={18} />}
                 </button>

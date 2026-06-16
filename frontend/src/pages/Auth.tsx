@@ -1,10 +1,13 @@
 import { useAuthForm } from '../hooks/useAuthForm';
+import { useTranslation } from 'react-i18next';
 
 interface AuthProps {
   onLogin: () => void;
 }
 
 export const Auth = ({ onLogin }: AuthProps) => {
+  const { t } = useTranslation();
+  
   const {
     isLogin, setIsLogin,
     email, setEmail,
@@ -20,13 +23,13 @@ export const Auth = ({ onLogin }: AuthProps) => {
           LINGUA <span className="opacity-40">VISTA</span>
         </h1>
         <p className="text-white/40 tracking-widest uppercase text-xs mt-3">
-          Elevate your vocabulary
+          {t('auth.subtitle')}
         </p>
       </div>
 
       <div className="dark-matte-glass rounded-[40px] p-10 w-full max-w-sm border border-white/10 shadow-2xl relative">
         <h2 className="text-2xl font-serif tracking-widest uppercase text-white text-center mb-8">
-          {isLogin ? 'Welcome Back' : 'Create Account'}
+          {isLogin ? t('auth.welcome') : t('auth.createAccount')}
         </h2>
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
@@ -38,7 +41,7 @@ export const Auth = ({ onLogin }: AuthProps) => {
           
           <input 
             type="email" 
-            placeholder="Email Address" 
+            placeholder={t('auth.emailPlaceholder')} 
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -47,7 +50,7 @@ export const Auth = ({ onLogin }: AuthProps) => {
           
           <input 
             type="password" 
-            placeholder="Password" 
+            placeholder={t('auth.passwordPlaceholder')} 
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -63,7 +66,7 @@ export const Auth = ({ onLogin }: AuthProps) => {
                 : 'bg-white/5 text-white border border-white/10 hover:bg-emerald-500/20 hover:text-emerald-400 hover:border-emerald-500/40 hover:shadow-[0_0_25px_rgba(16,185,129,0.2)] active:scale-95'
             }`}
           >
-            {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Sign Up')}
+            {loading ? t('auth.processing') : (isLogin ? t('auth.signIn') : t('auth.signUp'))}
           </button>
         </form>
 
@@ -72,7 +75,7 @@ export const Auth = ({ onLogin }: AuthProps) => {
             className="text-white/40 hover:text-white transition-colors cursor-pointer text-xs font-bold tracking-[0.1em] uppercase" 
             onClick={() => setIsLogin(!isLogin)}
           >
-            {isLogin ? 'No account? Sign up' : 'Already have an account? Sign in'}
+            {isLogin ? t('auth.noAccount') : t('auth.hasAccount')}
           </p>
         </div>
       </div>

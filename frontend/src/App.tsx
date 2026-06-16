@@ -9,17 +9,19 @@ import { ImmersiveStack } from './components/ImmersiveStack';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, LogOut, Settings } from 'lucide-react';
 import { api } from './api'; 
-
-const BACKEND_URL = 'http://localhost:3000';
+import { getImageUrl } from './utils/image';
+import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from './components/LanguageSwitcher';
 
 const NAV_LINKS = [
-  { path: '/', label: 'Learn' },
-  { path: '/camera', label: 'Camera' },
-  { path: '/dictionary', label: 'Dictionary' },
-  { path: '/feed', label: 'Feed' },
+  { path: '/', labelKey: 'nav.home' },
+  { path: '/camera', labelKey: 'nav.camera' },
+  { path: '/dictionary', labelKey: 'nav.dictionary' },
+  { path: '/feed', labelKey: 'nav.feed' },
 ];
 
 export const Navigation = ({ onLogout }: { onLogout: () => void }) => {
+  const { t } = useTranslation();
   const location = useLocation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
@@ -75,7 +77,7 @@ export const Navigation = ({ onLogout }: { onLogout: () => void }) => {
                       transition={{ type: "spring", stiffness: 400, damping: 30 }}
                     />
                   )}
-                  <span className="relative z-10">{link.label}</span>
+                  <span className="relative z-10">{t(link.labelKey)}</span>
                 </Link>
                 {index < NAV_LINKS.length - 1 && <Separator />}
               </div>
@@ -84,6 +86,8 @@ export const Navigation = ({ onLogout }: { onLogout: () => void }) => {
         </nav>
 
         <div className="hidden md:block w-px h-5 bg-white/10 ml-2"></div>
+
+        <LanguageSwitcher />
 
         <div className="relative" ref={dropdownRef}>
           <button 
@@ -96,7 +100,7 @@ export const Navigation = ({ onLogout }: { onLogout: () => void }) => {
           >
             {avatarUrl ? (
               <img 
-                src={`${BACKEND_URL}${avatarUrl}`} 
+                src={getImageUrl(avatarUrl)} 
                 alt="User Avatar" 
                 className={`w-full h-full object-cover rounded-full transition-all duration-500 mix-blend-screen
                   ${isProfileActive 
@@ -122,7 +126,7 @@ export const Navigation = ({ onLogout }: { onLogout: () => void }) => {
                 className="flex items-center gap-3 px-4 py-3 text-sm font-medium tracking-wide text-white/70 hover:text-white hover:bg-white/10 rounded-2xl transition-colors"
               >
                 <Settings size={16} />
-                Настройки
+                {t('nav.settings')}
               </Link>
               <button 
                 onClick={() => {
@@ -132,7 +136,7 @@ export const Navigation = ({ onLogout }: { onLogout: () => void }) => {
                 className="flex items-center gap-3 px-4 py-3 text-sm font-medium tracking-wide text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-2xl transition-colors text-left"
               >
                 <LogOut size={16} />
-                Выйти
+                {t('nav.logout')}
               </button>
             </div>
           )}

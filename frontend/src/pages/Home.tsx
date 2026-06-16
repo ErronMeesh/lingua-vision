@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useDashboard } from '../hooks/useDashboard';
 import { Zap, Brain, Flame, CheckCircle2, Camera, Globe } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Home = () => {
+  const { t } = useTranslation();
   const { cardsToReview, loading } = useDashboard();
   const hasCards = cardsToReview.length > 0;
 
@@ -11,13 +13,12 @@ export const Home = () => {
       
       <div className="text-center">
         <h1 className="text-4xl md:text-5xl font-serif tracking-[0.3em] text-white drop-shadow-lg uppercase mb-3 m-0">
-          Welcome Back
+          {t('home.welcome')}
         </h1>
         <p className="text-white/40 tracking-widest uppercase text-xs">
-          Select your training mode or discover tools
+          {t('home.subtitle')}
         </p>
       </div>
-
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
         
@@ -30,11 +31,11 @@ export const Home = () => {
           </div>
           
           <h3 className="text-2xl font-serif text-white tracking-widest uppercase mb-4 m-0">
-            Quick Workout
+            {t('home.quickWorkout')}
           </h3>
           
           <p className="text-white/50 text-[11px] font-bold tracking-[0.1em] uppercase leading-relaxed max-w-[250px] m-0">
-            SWIPE LEFT OR RIGHT. Perfect for a rapid memory refresh and daily vocabulary review.
+            {t('home.quickDesc')}
           </p>
         </Link>
 
@@ -47,11 +48,11 @@ export const Home = () => {
           </div>
           
           <h3 className="text-2xl font-serif text-white tracking-widest uppercase mb-4 m-0">
-            Deep Dive
+            {t('home.deepDive')}
           </h3>
           
           <p className="text-white/50 text-[11px] font-bold tracking-[0.1em] uppercase leading-relaxed max-w-[250px] m-0">
-            FOUR-WAY ASSESMENT DIVE. Use detailed memory ratings for advanced vocabulary retention.
+            {t('home.deepDesc')}
           </p>
         </Link>
       </div>
@@ -67,7 +68,7 @@ export const Home = () => {
       >
          <div className="flex flex-col gap-1 z-10">
             <span className="text-white/40 text-[10px] font-bold tracking-[0.2em] uppercase">
-              Daily Goal
+              {t('home.dailyGoal')}
             </span>
             
             {loading ? (
@@ -78,14 +79,14 @@ export const Home = () => {
                   {cardsToReview.length}
                 </span>
                 <span className="text-white/50 text-sm font-medium pb-1 tracking-wide transition-colors group-hover:text-white/80">
-                  words to review
+                  {t('home.wordsToReview')}
                 </span>
               </div>
             ) : (
               <div className="flex items-center gap-2 mt-1 text-emerald-400 group-hover:text-white transition-colors">
                 <CheckCircle2 size={24} className="drop-shadow-[0_0_10px_rgba(52,211,153,0.4)] group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] transition-all" />
                 <span className="font-serif tracking-widest uppercase text-sm">
-                  All done for today!
+                  {t('home.allDone')}
                 </span>
               </div>
             )}
@@ -98,7 +99,7 @@ export const Home = () => {
 
       <div className="w-full max-w-2xl mt-4 pt-10 border-t border-white/5 flex flex-col items-center gap-6 relative">
         <p className="text-white/30 text-[10px] font-bold tracking-[0.3em] uppercase m-0">
-          Additional Tools
+          {t('home.additionalTools')}
         </p>
         
         <div className="grid grid-cols-2 gap-5 w-full">
@@ -107,8 +108,8 @@ export const Home = () => {
             className="flex items-center justify-between p-5 rounded-2xl dark-matte-glass border border-emerald-500/10 hover:border-emerald-500/30 hover:bg-emerald-500/5 group transition-colors shadow-lg shadow-black/20"
           >
             <div className="flex flex-col gap-0.5">
-              <span className="text-white/90 text-sm font-bold tracking-widest uppercase m-0">Add Words</span>
-              <span className="text-emerald-400/80 text-[10px] font-bold tracking-[0.1em] uppercase">Use CameraUpload</span>
+              <span className="text-white/90 text-sm font-bold tracking-widest uppercase m-0">{t('home.addWords')}</span>
+              <span className="text-emerald-400/80 text-[10px] font-bold tracking-[0.1em] uppercase">{t('home.useCamera')}</span>
             </div>
             <div className="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20 transition-all group-hover:scale-105 group-hover:bg-emerald-500/20 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)]">
               <Camera size={22} />
@@ -120,8 +121,8 @@ export const Home = () => {
             className="flex items-center justify-between p-5 rounded-2xl dark-matte-glass border border-blue-500/10 hover:border-blue-500/30 hover:bg-blue-500/5 group transition-colors shadow-lg shadow-black/20"
           >
             <div className="flex flex-col gap-0.5">
-              <span className="text-white/90 text-sm font-bold tracking-widest uppercase m-0">View Feed</span>
-              <span className="text-blue-400/80 text-[10px] font-bold tracking-[0.1em] uppercase">Public Cards</span>
+              <span className="text-white/90 text-sm font-bold tracking-widest uppercase m-0">{t('home.viewFeed')}</span>
+              <span className="text-blue-400/80 text-[10px] font-bold tracking-[0.1em] uppercase">{t('home.publicCards')}</span>
             </div>
             <div className="w-11 h-11 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center border border-blue-500/20 transition-all group-hover:scale-105 group-hover:bg-blue-500/20 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]">
               <Globe size={22} />

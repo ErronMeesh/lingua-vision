@@ -5,8 +5,10 @@ import { Check, X, ChevronUp, ChevronDown, ChevronLeft, ChevronRight } from 'luc
 import toast from 'react-hot-toast';
 import { useTraining } from '../hooks/useTraining';
 import { getImageUrl } from '../utils/image';
+import { useTranslation } from 'react-i18next';
 
 export const Training = () => {
+  const { t } = useTranslation();
   const {
     loading, spellingInput, setSpellingInput,
     quizData, currentCard, currentIndex, total, isFinished,
@@ -24,7 +26,9 @@ export const Training = () => {
   if (loading || (!quizData && !needsMoreCardsPrompt)) {
     return (
       <div className="p-5 flex justify-center items-center h-[50vh]">
-        <p className="animate-pulse text-xl font-medium text-white/50 tracking-widest uppercase">⏳ Готовим стопку...</p>
+        <p className="animate-pulse text-xl font-medium text-white/50 tracking-widest uppercase">
+          {t('training.preparingStack')}
+        </p>
       </div>
     );
   }
@@ -35,23 +39,23 @@ export const Training = () => {
         <div className="dark-matte-glass p-10 rounded-[40px] border border-white/10 shadow-2xl max-w-md w-full flex flex-col items-center">
           <div className="text-6xl mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">🎉</div>
           <h2 className="m-0 mb-3 font-serif text-2xl tracking-widest uppercase text-white">
-            Excellent work!
+            {t('training.excellentWork')}
           </h2>
           <p className="m-0 mb-8 text-sm text-white/50 tracking-wide leading-relaxed">
-            All the words scheduled for today have been learned. Would you like to review the entire vocabulary outside the algorithm for extra practice?
+            {t('training.allWordsLearned')}
           </p>
           <div className="flex flex-col gap-3 w-full">
             <button 
               onClick={startExtraPractice}
               className="w-full bg-emerald-500/20 hover:bg-emerald-500/40 text-emerald-400 border border-emerald-500/30 px-5 py-4 rounded-2xl font-bold tracking-[0.1em] uppercase transition-all shadow-[0_0_20px_rgba(16,185,129,0.15)] hover:shadow-[0_0_30px_rgba(16,185,129,0.3)]"
             >
-              Continue the lesson
+              {t('training.continueLesson')}
             </button>
             <button 
               onClick={() => navigate('/')}
               className="w-full bg-white/5 hover:bg-white/10 text-white/70 border border-white/10 px-5 py-4 rounded-2xl font-bold tracking-[0.1em] uppercase transition-all"
             >
-              Return to main page
+              {t('training.returnToMain')}
             </button>
           </div>
         </div>
@@ -129,7 +133,7 @@ export const Training = () => {
     
     if (isCorrect) {
       if (distance === 1) {
-        toast(`Опечатка! Правильно: ${targetWord}`, { 
+        toast(t('training.typo', { word: targetWord }), { 
           icon: '👀', 
           duration: 7000, 
           style: { 
@@ -170,7 +174,7 @@ export const Training = () => {
           <div className="h-full bg-white/80 transition-all duration-300" style={{ width: `${(currentIndex / total) * 100}%` }} />
         </div>
         <div className="text-gray-400 text-sm font-medium tracking-widest uppercase">
-          Card {currentIndex + 1} / {total}
+          {t('training.cardCounter', { current: currentIndex + 1, total })}
         </div>
       </div>
 
@@ -238,19 +242,19 @@ export const Training = () => {
                 {isFront && quizData.type === '4d' && (
                   <>
                     <button onClick={(e) => { e.stopPropagation(); trigger4D('up'); }} className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-5 py-2.5 rounded-full dark-matte-glass border border-purple-500/40 text-purple-400 text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-purple-500/20 hover:scale-110 transition-all duration-300 shadow-[0_0_25px_rgba(168,85,247,0.3)] opacity-0 group-hover:opacity-100 z-50 whitespace-nowrap flex items-center gap-1.5">
-                      <ChevronUp size={16} strokeWidth={2.5} /> Идеально
+                      <ChevronUp size={16} strokeWidth={2.5} /> {t('training.perfect')}
                     </button>
                     
                     <button onClick={(e) => { e.stopPropagation(); trigger4D('down'); }} className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 px-5 py-2.5 rounded-full dark-matte-glass border border-orange-500/40 text-orange-400 text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-orange-500/20 hover:scale-110 transition-all duration-300 shadow-[0_0_25px_rgba(249,115,22,0.3)] opacity-0 group-hover:opacity-100 z-50 whitespace-nowrap flex items-center gap-1.5">
-                      <ChevronDown size={16} strokeWidth={2.5} /> С трудом
+                      <ChevronDown size={16} strokeWidth={2.5} /> {t('training.hard')}
                     </button>
                     
                     <button onClick={(e) => { e.stopPropagation(); trigger4D('left'); }} className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 px-5 py-2.5 rounded-full dark-matte-glass border border-red-500/40 text-red-500 text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-red-500/20 hover:scale-110 transition-all duration-300 shadow-[0_0_25px_rgba(239,68,68,0.3)] opacity-0 group-hover:opacity-100 z-50 whitespace-nowrap flex items-center gap-1.5">
-                      <ChevronLeft size={16} strokeWidth={2.5} /> Забыл
+                      <ChevronLeft size={16} strokeWidth={2.5} /> {t('training.forgot')}
                     </button>
                     
                     <button onClick={(e) => { e.stopPropagation(); trigger4D('right'); }} className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 px-5 py-2.5 rounded-full dark-matte-glass border border-green-500/40 text-green-400 text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-green-500/20 hover:scale-110 transition-all duration-300 shadow-[0_0_25px_rgba(34,197,94,0.3)] opacity-0 group-hover:opacity-100 z-50 whitespace-nowrap flex items-center gap-1.5">
-                      Нормально <ChevronRight size={16} strokeWidth={2.5} />
+                      {t('training.good')} <ChevronRight size={16} strokeWidth={2.5} />
                     </button>
                   </>
                 )}
@@ -271,7 +275,7 @@ export const Training = () => {
                   {isFront && quizData.type === '4d' && (
                     <div className="absolute top-4 left-1/2 -translate-x-1/2 w-max max-w-full z-10 pointer-events-none">
                       <div className="bg-black/50 backdrop-blur-md border border-white/10 text-white/80 text-[10px] font-bold tracking-widest uppercase px-4 py-2 rounded-full shadow-lg">
-                        Как хорошо помнишь?
+                        {t('training.howWellRemember')}
                       </div>
                     </div>
                   )}
@@ -298,7 +302,7 @@ export const Training = () => {
                         autoFocus
                         value={spellingInput}
                         onChange={(e) => setSpellingInput(e.target.value)}
-                        placeholder="Type in English..."
+                        placeholder={t('training.typeInEnglish')}
                         className="w-full p-3 text-lg text-center rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/30 focus:outline-none focus:border-white/50 transition-colors"
                       />
                     </form>

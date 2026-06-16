@@ -1,8 +1,10 @@
 import { Eye, EyeOff, Camera, User } from 'lucide-react';
 import { useProfile } from '../hooks/useProfile';
 import { getImageUrl } from '../utils/image';
+import { useTranslation } from 'react-i18next';
 
 export const Profile = () => {
+  const { t } = useTranslation();
   const {
     user, nickname, setNickname, newPassword, setNewPassword,
     showPassword, setShowPassword, loading, saving, fileInputRef,
@@ -13,7 +15,7 @@ export const Profile = () => {
     return (
       <div className="p-5 flex justify-center items-center h-[50vh]">
         <p className="animate-pulse text-xl font-medium text-white/50 tracking-widest uppercase">
-          ⏳ Загрузка профиля...
+          {t('profile.loading')}
         </p>
       </div>
     );
@@ -24,7 +26,7 @@ export const Profile = () => {
   return (
     <div className="p-8 max-w-md mx-auto mt-12 dark-matte-glass rounded-[40px] shadow-2xl border border-white/10 relative z-10">
       <h2 className="text-3xl md:text-4xl font-serif text-white text-center mb-10 tracking-widest uppercase">
-        PROFILE
+        {t('profile.title')}
       </h2>
 
       <div className="flex flex-col items-center mb-10">
@@ -40,7 +42,7 @@ export const Profile = () => {
           
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <Camera size={24} className="text-white/80 mb-1" />
-            <span className="text-white/80 font-bold tracking-widest uppercase text-[10px]">Изменить</span>
+            <span className="text-white/80 font-bold tracking-widest uppercase text-[10px]">{t('profile.changeAvatar')}</span>
           </div>
         </div>
         <input type="file" ref={fileInputRef} hidden accept="image/*" onChange={handleFileChange} />
@@ -49,7 +51,7 @@ export const Profile = () => {
       <div className="flex flex-col gap-6">
         <div>
           <label className="block text-white/40 text-[10px] font-bold mb-2 uppercase tracking-[0.2em]">
-            Email (нельзя изменить)
+            {t('profile.emailLabel')}
           </label>
           <input 
             type="text" 
@@ -61,27 +63,27 @@ export const Profile = () => {
 
         <div>
           <label className="block text-white/40 text-[10px] font-bold mb-2 uppercase tracking-[0.2em]">
-            Никнейм
+            {t('profile.nicknameLabel')}
           </label>
           <input 
             type="text" 
             value={nickname} 
             onChange={(e) => setNickname(e.target.value)}
-            placeholder="Придумайте никнейм"
+            placeholder={t('profile.nicknamePlaceholder')}
             className="w-full p-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-white/30 focus:bg-white/10 transition-all font-medium tracking-wide" 
           />
         </div>
 
         <div>
           <label className="block text-white/40 text-[10px] font-bold mb-2 uppercase tracking-[0.2em]">
-            Новый пароль
+            {t('profile.passwordLabel')}
           </label>
           <div className="relative">
             <input 
               type={showPassword ? 'text' : 'password'} 
               value={newPassword} 
               onChange={(e) => setNewPassword(e.target.value)}
-              placeholder="Оставьте пустым, если не меняете"
+              placeholder={t('profile.passwordPlaceholder')}
               className="w-full p-4 pr-14 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-white/30 focus:bg-white/10 transition-all font-medium tracking-wide" 
             />
             <button
@@ -103,7 +105,7 @@ export const Profile = () => {
               : 'bg-white/5 text-white border border-white/10 hover:bg-emerald-500/20 hover:text-emerald-400 hover:border-emerald-500/40 hover:shadow-[0_0_25px_rgba(16,185,129,0.2)] active:scale-95'
           }`}
         >
-          {saving ? 'Сохранение...' : 'Сохранить изменения'}
+          {saving ? t('profile.saving') : t('profile.saveBtn')}
         </button>
       </div>
     </div>
